@@ -73,6 +73,292 @@ Due to **high dimensionality and class imbalance**, advanced preprocessing and f
 
 ---
 
+## 🔹 Synthetic Minority Oversampling Technique (SMOTE)
+What is SMOTE?
+
+SMOTE (Synthetic Minority Oversampling Technique) is a data balancing technique used to handle class imbalance problems in machine learning datasets. Class imbalance occurs when one or more classes have significantly fewer samples than others, which can bias the model toward majority classes.
+
+Instead of duplicating existing minority samples, SMOTE generates new synthetic data points by interpolating between existing minority class samples. This helps create a more balanced dataset without overfitting.
+
+**How SMOTE Works**
+
+Identify samples belonging to the minority class.
+
+For each minority sample, find its k-nearest neighbors.
+
+Randomly select one of the neighbors.
+
+Generate a new synthetic sample along the line segment between the original sample and its neighbor.
+
+Repeat until the desired balance is achieved.
+
+**Why SMOTE is Important in This Project**
+
+The leukemia dataset contains very few patient samples (72) with uneven class distribution.
+
+Without balancing, machine learning models tend to favor dominant leukemia classes, leading to poor diagnosis of minority subtypes.
+
+**SMOTE ensures:**
+
+Equal learning opportunity for all leukemia classes
+
+Improved sensitivity (recall) for minority classes
+
+Reduced model bias
+
+Better generalization and clinical reliability
+
+**Impact on Results**
+
+By applying SMOTE during preprocessing:
+
+Classification accuracy improved
+
+Recall and MCC scores increased
+
+Neural networks (BPNN) learned more stable decision boundaries
+
+## 🔹 Feature Selection
+**What is Feature Selection?**
+
+Feature selection is the process of identifying and selecting the most relevant input variables (features) that contribute significantly to the prediction task while removing irrelevant, redundant, or noisy features.
+
+In high-dimensional datasets, such as genomic data, feature selection is critical to avoid overfitting and improve model interpretability.
+
+Why Feature Selection is Necessary in This Project
+
+The dataset contains 7,130 genomic features but only 72 samples
+
+High dimensionality leads to:
+
+Overfitting
+
+Increased computational cost
+
+Reduced model stability
+
+Poor generalization
+
+Feature selection helps in:
+
+Reducing dimensionality
+
+Improving learning efficiency
+
+Enhancing classification accuracy
+
+Identifying important biomarkers
+
+**Feature Selection Techniques Used**
+
+## 1️⃣ ANOVA (Analysis of Variance)
+
+Measures statistical differences between feature values across leukemia classes
+
+Identifies features that show significant variation among classes
+
+Removes features with low discriminative power
+
+Contribution to Project:
+
+Filters out irrelevant genomic attributes
+
+Retains biologically meaningful features
+
+## 2️⃣ Information Gain (Entropy-Based)
+
+Measures how much information a feature provides about the target class
+
+Higher information gain means stronger prediction capability
+
+Contribution to Project:
+
+Selects features that reduce uncertainty in leukemia classification
+
+Improves early-stage decision-making
+
+## 3️⃣ Correlation Analysis
+
+Measures linear dependency between features and target class
+
+Removes:
+
+Highly correlated redundant features
+
+Features weakly related to the class label
+
+Contribution to Project:
+
+Eliminates multicollinearity
+
+Improves model robustness and numerical stability
+
+Overall Benefit of Feature Selection
+
+By combining ANOVA, Information Gain, and Correlation:
+
+Noise is reduced
+
+Only the most relevant genomic features are retained
+
+Models train faster and perform better
+
+Overfitting is significantly reduced
+
+## 🔹 TOPSIS (Technique for Order Preference by Similarity to Ideal Solution)
+What is TOPSIS?
+
+TOPSIS is a multi-criteria decision-making (MCDM) technique used to rank alternatives based on their distance from an ideal best solution and an ideal worst solution.
+
+In this project, TOPSIS is used to rank selected features based on multiple feature selection criteria.
+
+Why TOPSIS is Needed After Feature Selection
+
+Each feature selection method evaluates features differently:
+
+ANOVA focuses on variance
+
+Information Gain focuses on entropy reduction
+
+Correlation focuses on linear dependency
+
+TOPSIS combines all these perspectives into a single, objective ranking.
+
+**How TOPSIS Works**
+
+Construct a decision matrix using feature scores from ANOVA, Information Gain, and Correlation.
+
+Normalize the scores to bring them onto a common scale.
+
+**Determine:**
+
+Ideal best solution (maximum values)
+
+Ideal worst solution (minimum values)
+
+Calculate:
+
+Distance of each feature from ideal best
+
+Distance from ideal worst
+
+**Compute TOPSIS score:**
+
+Higher score → more important feature
+
+Rank features accordingly.
+
+Contribution of TOPSIS to This Project
+
+Ensures fair and unbiased feature ranking
+
+Prevents dominance of a single selection method
+
+Selects features that perform consistently across criteria
+
+Improves classification accuracy and model reliability
+
+## 🔹 Block Diagram and Workflow Explanation
+
+The proposed system follows a structured multi-stage machine learning pipeline, ensuring robustness and accuracy at each stage.
+
+Step 1: Data Collection
+
+Leukemia microarray dataset is collected
+
+Contains genomic features and labeled leukemia classes
+
+Step 2: Data Preprocessing
+
+Missing values handled using statistical imputation
+
+Feature scaling applied to normalize data
+
+SMOTE applied to handle class imbalance
+
+Dataset split into training and testing sets
+
+Purpose:
+Ensure clean, balanced, and standardized input data
+
+Step 3: Feature Selection
+
+ANOVA identifies statistically significant features
+
+Information Gain selects entropy-reducing features
+
+Correlation removes redundant features
+
+Purpose:
+Reduce dimensionality and remove noise
+
+Step 4: Feature Ranking using TOPSIS
+
+Scores from all feature selection methods are combined
+
+TOPSIS ranks features based on overall importance
+
+Top-ranked features are selected
+
+Purpose:
+Ensure optimal and objective feature prioritization
+
+Step 5: Model Training
+
+Selected features are fed into multiple classifiers:
+
+Traditional ML models
+
+Ensemble methods
+
+Neural networks (BPNN)
+
+Purpose:
+Learn patterns distinguishing leukemia subtypes
+
+Step 6: Model Evaluation
+
+Performance measured using:
+
+Accuracy
+
+Precision
+
+Recall
+
+Specificity
+
+F1-score
+
+MCC
+
+Confusion matrix and ROC curves analyzed
+
+Purpose:
+Assess clinical reliability and prediction strength
+
+Step 7: Best Model Selection
+
+BPNN identified as the best-performing classifier
+
+Achieves highest accuracy and stability
+
+## 🔹 Overall Significance of the Workflow
+
+This workflow ensures:
+
+Balanced learning (SMOTE)
+
+Reduced complexity (Feature Selection)
+
+Optimal feature prioritization (TOPSIS)
+
+Robust classification (BPNN)
+
+High diagnostic accuracy (95.45%)
+
+----
+
 ## 🔧 Methodology Pipeline
 
 ### 1️⃣ Data Preprocessing
